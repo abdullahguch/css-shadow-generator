@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Shadow Generator</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #box-container {
+            margin-top: 75px;
+        }
+
+        label {
+            margin-top: 0.5rem;
+        }
+
+        #box, #css-output {
+            width: 300px;
+            height: 300px;
+            background-color: #3498db;
+            margin: 20px auto;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        #css-output {
+            height: 250px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-family: monospace;
+            background-color: transparent;
+        }
+
+        .range-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center mt-5">CSS Shadow Generator</h1>
+            </div>
+        </div>
+        <div class="row" id="box-container">
+            <div class="col-md-3">
+                <div class="range-container">
+                    <label for="horizontal">Horizontal Offset:</label>
+                    <span id="horizontal-value">10</span>
+                </div>
+                <input type="range" id="horizontal" class="form-control" min="-50" max="50" value="10">
+            </div>
+            <div class="col-md-3">
+                <div class="range-container">
+                    <label for="vertical">Vertical Offset:</label>
+                    <span id="vertical-value">10</span>
+                </div>
+                <input type="range" id="vertical" class="form-control" min="-50" max="50" value="10">
+            </div>
+            <div class="col-md-3">
+                <div class="range-container">
+                    <label for="blur">Blur Radius:</label>
+                    <span id="blur-value">10</span>
+                </div>
+                <input type="range" id="blur" class="form-control" min="0" max="50" value="10">
+            </div>
+            <div class="col-md-3">
+                <div class="range-container">
+                    <label for="spread">Spread Radius:</label>
+                    <span id="spread-value">0</span>
+                </div>
+                <input type="range" id="spread" class="form-control" min="0" max="50" value="0">
+            </div>
+        </div>
+        <div class="row mb-5" id="box-container">
+            <div class="col-md-6">
+                <div id="box"></div>
+            </div>
+
+            <div class="col-md-6">
+                <p class="text-center">CSS Output:</p>
+                <div id="css-output"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to update box shadow based on slider values
+        function updateBoxShadow() {
+            const horizontal = document.getElementById('horizontal');
+            const vertical = document.getElementById('vertical');
+            const blur = document.getElementById('blur');
+            const spread = document.getElementById('spread');
+
+            const horizontalValue = document.getElementById('horizontal-value');
+            const verticalValue = document.getElementById('vertical-value');
+            const blurValue = document.getElementById('blur-value');
+            const spreadValue = document.getElementById('spread-value');
+
+            horizontalValue.textContent = horizontal.value;
+            verticalValue.textContent = vertical.value;
+            blurValue.textContent = blur.value;
+            spreadValue.textContent = spread.value;
+
+            const boxShadowValue = `${horizontal.value}px ${vertical.value}px ${blur.value}px ${spread.value}px rgba(0, 0, 0, 0.5)`;
+            document.getElementById('box').style.boxShadow = boxShadowValue;
+
+            // Generate CSS class and update the output area
+            const cssClass = `.shadow-box {
+                box-shadow: ${boxShadowValue};
+            }`;
+            document.getElementById('css-output').textContent = cssClass;
+        }
+
+        // Attach event listeners to sliders
+        document.getElementById('horizontal').addEventListener('input', updateBoxShadow);
+        document.getElementById('vertical').addEventListener('input', updateBoxShadow);
+        document.getElementById('blur').addEventListener('input', updateBoxShadow);
+        document.getElementById('spread').addEventListener('input', updateBoxShadow);
+
+        // Initial update
+        updateBoxShadow();
+    </script>
+</body>
+</html>
